@@ -1,5 +1,6 @@
 import { readFile as fsReadFile } from 'fs';
 import { BrailleChar } from './BrailleChar';
+import { BraillePhrase } from './BraillePhrase';
 
 /**
  * Parser class for handling Braille text files.
@@ -24,7 +25,7 @@ export class Parser {
     /**
      * Parses a solution file containing expected outputs.
      * Each line in the solution file contains an expected decoded sentence.
-     * 
+     *
      * @param filename - Path to the solution file to parse
      * @returns Promise resolving to array of expected sentences
      * @throws Error if file cannot be read
@@ -43,7 +44,7 @@ export class Parser {
      * - First 3 lines: Braille alphabet definition (52 chars each)
      * - Line 4: Number of test cases
      * - Following lines: Test cases, 3 lines per case
-     * 
+     *
      * @param filename - Path to the Braille file to parse
      * @returns Promise resolving to array of decoded sentences
      * @throws Error if file format is invalid
@@ -53,7 +54,8 @@ export class Parser {
         const lines = content.split('\n').map((line) => line.trim());
 
         // Initialize alphabet with first 3 lines
-        BrailleChar.initializeAlphabet(lines[0], lines[1], lines[2]);
+        const alphabetPhrase = new BraillePhrase(lines[0], lines[1], lines[2]);
+        BrailleChar.initializeAlphabet(alphabetPhrase);
 
         // Read number of test cases
         const numCases = parseInt(lines[3]);
@@ -61,11 +63,13 @@ export class Parser {
 
         let currentLine = 4;
         for (let i = 0; i < numCases; i++) {
-            const row1 = lines[currentLine];
-            const row2 = lines[currentLine + 1];
-            const row3 = lines[currentLine + 2];
+            const sentencePhrase = new BraillePhrase(
+                lines[currentLine],
+                lines[currentLine + 1],
+                lines[currentLine + 2]
+            );
 
-            const decoded = BrailleChar.decodeSentence(row1, row2, row3);
+            const decoded = BrailleChar.decodePhrase(sentencePhrase);
             results.push(decoded);
 
             currentLine += 3;

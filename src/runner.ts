@@ -13,8 +13,7 @@ for (const [i, sentence] of sentences.entries()) {
     if (sentence != solutions[i]){
         console.error(`Sentence ${i} wrong?`, sentence, solutions[i]);
     }else{
-        console.log(`Sentence ${i} matched.`);
-        
+        // console.log(`Sentence ${i} matched.`);
     }
 }
 console.log(`Code took ${performance.now() - startTime} msec.`);
