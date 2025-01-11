@@ -1,8 +1,9 @@
 {
   "name": "vpw-2018-braille-ts",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "author": { "name": "Maarten DUHOUX and GitHub Copilot"},
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
